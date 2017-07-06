@@ -1,4 +1,12 @@
+<h1> Welcome <%= @user.username %></h1>
+
 <% @user.books.each do |book| %>
   <%= book.title %>
   <%= book.author %>
 <% end %>
+
+
+<h2>Would You Like To....</h2>
+<a href="/books/new"><button type="button" class="btn btn-primary">Create A New Book?</button></a>
+<a href="/books"><button type="button" class="btn btn-primary"> See Your Library?</button></a><br></br>
+<a href="/logout"><button type="button" class="btn btn-primary"> Log Out?</button></a>

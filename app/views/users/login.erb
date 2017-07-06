@@ -1,7 +1,14 @@
+<%if flash.has?(:message) %>
+  <%= flash[:message] %>
+<% end %>
+
 <h1> Login To Access Your Library! </h1>
 
 <form method="POST" action="/login">
-  <p>Username: <input type="text" name="username"></p>
-  <p>Password: <input type="text" name="password"></p>
+  <p>Username: <input type="text" name="username" id="username"></p>
+  <p>Password: <input type="password" name="password" id="password"></p>
   <input type="submit" id="submit" value="Log In">
 </form>
+
+<p>Haven't joined our library family?</p>
+<p>Sign Up <a href="/signup">Here</a>!</p>

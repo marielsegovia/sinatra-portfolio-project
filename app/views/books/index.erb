@@ -1,6 +1,11 @@
-<h1> Welcome <%= @user.username %> </h1>
+<h1> The <%= @user.username %> Library!</h1>
 
 <% @books.each do |book| %>
-  <%= book.title %>
-  <%= book.author %>
+  <label name="title">Title</label> <%= book.title %> </label>
+  <label name="author">Author</label> <%= book.author %> </label>
+  <br></br>
 <% end %>
+
+<h2>Would You Like To....</h2>
+<a href="/books/new"><button type="button" class="btn btn-primary">Create A New Book?</button></a>
+<a href="/logout"><button type="button" class="btn btn-primary"> Log Out?</button></a>

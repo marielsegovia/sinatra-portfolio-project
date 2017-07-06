@@ -1,7 +1,12 @@
 <h1> Add a New Book! </h1>
 
 <form method="POST" action="/books">
-  <p>Title: <input type="text" name="title"></p>
-  <p>Author: <input type="text" name="author"></p>
-  <input type="submit" id="submit" value="Add Book To Your Collection">
+  <label name="title">Title</label>
+  <input type="text" name="title"></p>
+  <label name="author">Author</label>
+  <input type="text" name="author"></p>
+  <input type="submit" id="submit" value="Submit">
 </form>
+
+<a href="/books"><button type="button" class="btn btn-primary"> See Your Library?</button></a><br></br>
+<a href="/logout"><button type="button" class="btn btn-primary"> Log Out?</button></a>

@@ -1,4 +1,16 @@
+
 class BooksController < ApplicationController
+
+    get '/books' do
+      if logged_in?
+        @user = User.find_by_id(session[:user_id])
+        @books = Book.all
+        erb :'books/index'
+      else
+        redirect to '/login'
+      end
+    end
+
   get '/books/new' do
     if logged_in?
       erb :'books/new'
@@ -8,20 +20,12 @@ class BooksController < ApplicationController
   end
 
   post '/books' do
-    @book = Book.new(:title => params[:title], :author => params[:author])
-    if @book.save
-      redirect to '/index'
-    else
+    if params[:title] == "" || params[:author] == ""
       redirect to '/books/new'
-    end
-  end
-
-  get '/books/' do
-    if logged_in?
-      @book = Book.all
-      erb :'books/index'
     else
-      redirect to '/login'
+      @book = Book.create(title: params[:title], author: params[:author], user_id: current_user.id)
+      @book.save
+      redirect to "/books/#{@book.id}"
     end
   end
 
@@ -30,6 +34,7 @@ class BooksController < ApplicationController
       @book = Book.find_by_id(params[:id])
       erb :'books/show'
     else
+      flash[:message] = "Please login to access your library."
       redirect to '/login'
     end
   end
@@ -48,11 +53,13 @@ class BooksController < ApplicationController
   end
 
   patch '/books/:id' do
-    @book = Book.find_by_id(params[:id])
-    if params[:title].empty? || params[:author].empty?
-      redirect to "/books/#{@book.id}/edit"
+    if params[:title] == "" || params[:author] == ""
+      redirect to "/books/#{params[:id]}/edit"
     else
-      @book.update(:title => params[:title], :author => params[:author])
+      @book = Book.find_by_id(params[:id])
+      @book.title = params[:title]
+      @book.author = params[:author]
+      @book.save
       redirect to "/books/#{@book.id}"
     end
   end
@@ -60,12 +67,9 @@ class BooksController < ApplicationController
   delete '/books/:id/delete' do
     if logged_in?
       @book = Book.find_by_id(params[:id])
-      if @book.user_id == current_user
-        @book.delete
-        redirect to '/books'
-      else
-        redirect to "/books/#{@book.id}"
-      end
+      @book.user_id == current_user.id
+      @book.delete
+      redirect to '/books'
     else
       redirect to '/login'
     end
