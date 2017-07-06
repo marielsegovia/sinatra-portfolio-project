@@ -7,6 +7,7 @@ INSTALLATION INSTRUCTIONS:
 To install and use...
 
 - clone
+- run bundle install
 - run rake db:migrate
 - run shotgun
 
